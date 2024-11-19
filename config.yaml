@@ -1,0 +1,61 @@
+proxies:
+proxy-providers:
+  WAN:
+    type: file
+    path: ./assets/akun.yaml
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 99
+proxy-groups:
+- name: MASTER-META
+  type: select
+  proxies:
+  - LOADBALANCING
+  - BYPASS
+- name: LOADBALANCING
+  type: load-balance
+  strategy: round-robin
+  use:
+  - WAN
+  url: http://www.gstatic.com/generate_204
+  interval: 99
+- name: GAME
+  type: select
+  proxies:
+  - LOADBALANCING
+  - BYPASS
+  - BLOKER
+- name: PORN ADBLOCK
+  type: select
+  proxies:
+  - LOADBALANCING
+  - BYPASS
+  - BLOKER
+- name: BYPASS
+  type: select
+  proxies:
+  - DIRECT
+- name: BLOKER
+  type: select
+  proxies:
+  - REJECT
+rule-providers:
+  Game:
+    type: file
+    behavior: classical
+    path: ./assets/game.yaml
+  Porn:
+    type: file
+    behavior: domain
+    path: ./assets/porn.yaml
+  Adblock:
+    type: file
+    behavior: classical
+    path: ./assets/AdblockMaster.yaml
+rules:
+- IP-CIDR,198.18.0.1/16,REJECT,no-resolve
+- RULE-SET,Game,GAME
+- RULE-SET,Porn,PORN ADBLOCK
+- RULE-SET,Adblock,PORN ADBLOCK
+- MATCH,MASTER-META

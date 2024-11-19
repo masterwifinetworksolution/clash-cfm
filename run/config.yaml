@@ -1,0 +1,178 @@
+mode: rule
+allow-lan: true
+unified-delay: false
+bind-address: '*'
+log-level: debug
+ipv6: false
+geodata-mode: false
+external-controller: 0.0.0.0:9090
+external-ui: dashboard/dist
+tcp-concurrent: false
+interface-name: ""
+enable-process: false
+geodata-loader: memconservative
+inbound-tfo: false
+secret: ""
+# geox-url: {mmdb: "", geoip: "", geosite: "https://github.com/taamarin/v2ray-rules-dat/raw/release/GeoSite.dat"}
+profile:
+  store-selected: true
+  store-fake-ip: true
+experimental: {
+    sniff-tls-sni: false,
+    fingerprint: ""
+}
+sniffer:
+  enable: true
+  sniffing:
+    - tls
+    - http
+  force-domain:
+    - '+'
+  skip-domain: 
+    - '+.google.com'
+  port-whitelist:
+    - 443
+    - 80
+hosts: {
+  "cacerts.digicert.com": "104.21.21.147",
+  "ota.googlezip.net": "127.0.0.1",
+  "ota-cache1.googlezip.net": "127.0.0.1",
+  "ota-cache2.googlezip.net": "127.0.0.1"
+}
+tun:
+  enable: false
+  device: META
+  stack: system
+  dns-hijack:
+    - any:53
+  auto-route: false
+  auto-detect-interface: false
+dns:
+  enable: true
+  ipv6: false
+  prefer-h3: false
+  default-nameserver:
+    - 8.8.8.8
+    - 8.8.4.4
+  listen: 0.0.0.0:7874
+  use-hosts: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter: [
+    "*.lan",
+    "*.localdomain",
+    "*.example",
+    "*.invalid",
+    "*.localhost",
+    "*.test",
+    "*.local",
+    "*.home.arpa",
+    "*.time.edu.cn",
+    "*.ntp.org.cn"
+  ]
+  nameserver:
+    - 8.8.8.8
+    - 8.8.4.4
+    - https://dns.google/dns-query
+  fallback: []
+  fallback-filter:
+    geoip: true
+    geoip-code: "!ID"
+    geosite: [GFW]
+    ipcidr: [
+	  '0.0.0.0/8',
+      '10.0.0.0/8',
+      '100.64.0.0/10',
+      '127.0.0.0/8',
+      '169.254.0.0/16',
+      '172.24.0.0/16',
+      '172.16.0.0/12',
+      '192.0.0.0/24',
+      '192.0.2.0/24',
+      '192.88.99.0/24',
+      '192.168.0.0/16',
+      '198.18.0.0/15',
+      '198.51.100.0/24',
+      '203.0.113.0/24',
+      '224.0.0.0/4',
+      '240.0.0.0/4',
+      '255.255.255.255/32'
+	]
+    domain: [
+	  '+.google.com',
+	  '+.facebook.com',
+	  '+.youtube.com',
+      '+.netflix.com',
+      '+.githubusercontent.com',
+      '+.googlevideo.com',
+      '+.msftconnecttest.com',
+      '+.msftncsi.com',
+      'msftconnecttest.co',
+      'msftncsi.com'
+	]
+port: 7890
+socks-port: 7891
+redir-port: 7892
+tproxy-port: 9898
+mixed-port: 7893
+proxies:
+proxy-providers:
+  WAN:
+    type: file
+    path: ./assets/akun.yaml
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 99
+proxy-groups:
+- name: MASTER-META
+  type: select
+  proxies:
+  - LOADBALANCING
+  - BYPASS
+- name: LOADBALANCING
+  type: load-balance
+  strategy: round-robin
+  use:
+  - WAN
+  url: http://www.gstatic.com/generate_204
+  interval: 99
+- name: GAME
+  type: select
+  proxies:
+  - LOADBALANCING
+  - BYPASS
+  - BLOKER
+- name: PORN ADBLOCK
+  type: select
+  proxies:
+  - LOADBALANCING
+  - BYPASS
+  - BLOKER
+- name: BYPASS
+  type: select
+  proxies:
+  - DIRECT
+- name: BLOKER
+  type: select
+  proxies:
+  - REJECT
+rule-providers:
+  Game:
+    type: file
+    behavior: classical
+    path: ./assets/game.yaml
+  Porn:
+    type: file
+    behavior: domain
+    path: ./assets/porn.yaml
+  Adblock:
+    type: file
+    behavior: classical
+    path: ./assets/AdblockMaster.yaml
+rules:
+- IP-CIDR,198.18.0.1/16,REJECT,no-resolve
+- RULE-SET,Game,GAME
+- RULE-SET,Porn,PORN ADBLOCK
+- RULE-SET,Adblock,PORN ADBLOCK
+- MATCH,MASTER-META

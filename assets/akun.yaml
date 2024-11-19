@@ -1,0 +1,25 @@
+proxies:
+- name: sshocean-simaster
+  server: at1.v2vmess.site
+  port: 443
+  type: vmess
+  uuid: cb81bcb7-5a63-41b6-a6eb-747d8a2a8132
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  servername: io.ruangguru.com
+  network: ws
+  ws-opts:
+    path: /vmess
+    headers:
+      Host: at1.v2vmess.site
+  udp: true
+- name: sghe1
+  server: sg1-trojan.bonds.id
+  type: trojan
+  port: 443
+  password: 3b5b4f50-a550-11ef-b315-1239d0255272
+  sni: io.ruangguru.com
+  udp: true
+  skip-cert-verify: true

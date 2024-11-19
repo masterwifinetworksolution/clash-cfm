@@ -1,0 +1,25 @@
+Tue Nov 19 16:26:18 WITA 2024
+Clash Meta alpha-d611319 linux arm with go1.19.5 Fri Jan 13 12:38:45 WIB 2023
+CPU: 4.2% | RES: 51Mb
+━━━━━━━━━━━━━━━━━━━━━━━━━
+04.26 PM [info] Ipv6: ☒ dimatikan
+04.26 PM [info] ☑ Clash Meta is enable.
+04.26 PM [info] konfigurasi /data/clash/config.yaml.
+04.26 PM [info] turn on tproxy mode.
+04.26 PM [info] merge files /data/clash/config.yaml & template Succes
+04.26 PM [info] Crontab (geo) and (subscription) (0 00 * * *).
+04.26 PM [info] clash geox ☐ (false).
+04.26 PM [info] clash subscription ☐ (false).
+04.26 PM [info] "Start initial configuration in progress"
+04.26 PM [info] "Geodata Loader mode: memconservative"
+04.26 PM [info] "Initial configuration complete, total time: 48ms"
+04.26 PM [info] /data/clash/run/config.yaml test is successful
+04.26 PM [info] enhanced-mode: fake-ip 
+04.26 PM [info] if you want to use whitelist and blacklist, use enhanced-mode: redr-host
+04.26 PM [info] port detected: 7874 7890 7891 7892 7893 9090 9898 
+04.26 PM [info] use MIXED: TCP+TUN.
+04.26 PM [info] creating iptables transparent proxy rules.
+04.26 PM [info] softap+ wlan+ swlan+ ap+ rndis+ transparent proxy.
+04.26 PM [info] transparent proxy for all apps.
+04.26 PM [info] create iptables transparent proxy rules done.
+04.26 PM [info] Clash terhubung.
