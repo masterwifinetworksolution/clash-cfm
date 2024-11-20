@@ -2,7 +2,7 @@
 
 ## Cara penggunaan
 
-1. download file hanya di [masterwifinetworksolution(https://masterwifinetworksolution.github.io)
+1. download file hanya di [masterwifinetworksolution](https://masterwifinetworksolution.github.io)
 2. Extract file
 3. Masukkkan semua isi folder dari `clash-cfm-master` ke dalam folder `/data/clash` dalam hp kalian yang sudah root `magisk`.
 4. Pastikan kalian sudah pasang module `clash for magisk` terbaru yaitu versi 3.0 dan aplikasi `Clash For Magisk` versi `1.6.4` sebelum melanjutkan tata cara penggunaan No.3.
